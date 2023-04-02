@@ -5,20 +5,26 @@
 
 class Card {
     // Private attributes.
-    int type;
+    int num;
+    std::string type;
+
 public:
     // Constructor.
-    Card(int type = 1) : {
+    Card(int num, const std::string &type) {
         // Throw an exception if it is invalid type.
-        if (type < 1 || type > 13) {
-            throw std::invalid_argument("Type is out of range!");
+        if (num < 1 || num > 13) {
+            throw std::invalid_argument("Num is out of range!");
         }
+        this -> num = num;
         this -> type = type;
     }
     // Destructor.
     ~Card() {}
     // Get method.
-    int& getType() { return type; }
+    const int& getNum() { return num; }
+    const std::string& getName() { return type; }
+    // ToString method.
+    std::string toString();
 };
 
 #endif

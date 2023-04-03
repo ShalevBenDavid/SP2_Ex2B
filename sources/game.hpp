@@ -14,24 +14,24 @@ class Game {
     Player B;
     std::vector<Card> main_deck;
     std::vector<std::string> turns;
+    int num_of_draws;
     bool has_won;
     bool has_ended;
+
 public:
     // Constructor.
     Game(const Player& player1, const Player& player2) {
         A = player1;
         B = player2;
         assignCards();
-        A.getStackSize() = FULL_DECK;
-        B.getStackSize() = FULL_DECK;
+        num_of_draws = 0;
         has_won = false;
         has_ended = false;
     }
-    // Destructor.
-    ~Game() {}
     // Methods.
     void assignCards();
     void distributeCards();
+    void declareWinner(Player);
     void playTurn();
     void printLastTurn();
     void playAll();

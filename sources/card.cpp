@@ -4,13 +4,13 @@
 
 std::string Card::toString() {
     switch (this -> num) {
-        case 1:
+        case ACE:
             return "Ace of " + this -> type;
-        case 11:
+        case JACK:
             return "Jack of " + this -> type;
-        case 12:
+        case QUEEN:
             return "Queen of " + this -> type;
-        case 13:
+        case KING:
             return "king of " + this -> type;
         default:
             return std::to_string(this -> num) + " of " + this -> type;

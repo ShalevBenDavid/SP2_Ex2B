@@ -11,8 +11,8 @@ const int FULL_DECK = 26;
 
 class Game {
     // Private attributes.
-    Player A;
-    Player B;
+    Player& A;
+    Player& B;
     std::vector<Card> _main_deck;
     std::vector<std::string> _turns;
     int _num_of_draws;
@@ -21,17 +21,12 @@ class Game {
 public:
     // Constructor.
     Game(Player& playerA, Player& playerB) :
-    A(playerA), B(playerB), _num_of_draws(0), _has_ended(false) {
-        if (&A == &B) {
-            throw std::invalid_argument("The game already ended!");
-        }
-        assignCards();
-    }
+    A(playerA), B(playerB), _num_of_draws(0), _has_ended(false) { assignCards(); }
 
     // Methods.
     void assignCards();
-    void distributeCards();
-    void declareWinner(Player& winner);
+    void distributeCards(std::vector<Card>&, std::vector<Card>&);
+    void declareWinner(Player&);
     void putCards();
     void playTurn();
     void printLastTurn();

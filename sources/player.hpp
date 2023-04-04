@@ -24,6 +24,7 @@ public:
     unsigned long cardesTaken() { return _win_deck.size(); }
     int& getNumOfWins() { return _num_of_wins; }
     std::vector<Card>& getPlayerDeck() {return _player_deck; }
+    std::vector<Card>& getWinDeck() {return _win_deck; }
 
     // Set method.
     void setName(const std::string &new_name) { _name = new_name; }

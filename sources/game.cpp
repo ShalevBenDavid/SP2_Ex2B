@@ -1,6 +1,7 @@
 // Created by Shalev Ben David.
 #include "game.hpp"
 #include "card.hpp"
+#include <algorithm>
 #include <random>
 #include <iostream>
 #include <stdexcept>
@@ -17,17 +18,17 @@ void Game::assignCards() {
     std::random_device random_seed;
     std::shuffle(std::begin(this -> _main_deck), std::end(this -> _main_deck), random_seed);
     // Distribute the cards to the 2 players.
-    this -> distributeCards();
+    this -> distributeCards(this -> A.getPlayerDeck(), this -> B.getPlayerDeck());
 }
 
 // ****************** Distribute Cards From Main Deck To Both Players ******************
-void Game::distributeCards() {
+void Game::distributeCards(std::vector<Card>& deck_A, std::vector<Card>& deck_B) {
     // While the main deck isn't empty.
     while (!(this -> _main_deck.empty())) {
-        // Give a card for each player from the main deck.
-        this -> B.getPlayerDeck().push_back(this -> _main_deck.back());
+        // Give a card for each player from the main deck to his winning/curren deck.
+        deck_B.push_back(this -> _main_deck.back());
         this -> _main_deck.pop_back();
-        this -> A.getPlayerDeck().push_back(this -> _main_deck.back());
+        deck_A.push_back(this -> _main_deck.back());
         this -> _main_deck.pop_back();
     }
 }
@@ -53,6 +54,10 @@ void Game::putCards() {
 
 // ****************** Playing A Turn ******************
 void Game::playTurn() {
+    // If it is the same player, throw exception.
+    if (&(this -> A) == &(this -> B)) {
+        throw std::invalid_argument("The game already ended!");
+    }
     // If the game already ended, throw exception.
     if (this -> _has_ended) {
         throw std::runtime_error("The game already ended!");
@@ -92,7 +97,7 @@ void Game::playTurn() {
     }
     // If the game has ended, distribute main deck && update has_ended.
     if ((this -> A.stacksize() == 0) && (this -> B.stacksize() == 0)) {
-        this -> distributeCards();
+        this -> distributeCards(this -> A.getWinDeck(), this -> B.getWinDeck());
         this -> _has_ended = true;
     }
 }

@@ -4,46 +4,52 @@
 #include "player.hpp"
 #include "card.hpp"
 #include <string>
+#include <stdexcept>
 #include <vector>
 
 const int FULL_DECK = 26;
 
 class Game {
     // Private attributes.
-    Player A;
-    Player B;
-    std::vector<Card> main_deck;
-    std::vector<std::string> turns;
-    int num_of_draws;
-    bool has_won;
-    bool has_ended;
+    Player _A;
+    Player _B;
+    std::vector<Card> _main_deck;
+    std::vector<std::string> _turns;
+    int _num_of_draws;
+    bool _has_ended;
 
 public:
     // Constructor.
-    Game(const Player& player1, const Player& player2) {
-        A = player1;
-        B = player2;
+    Game(Player& A, Player& B) :
+    _A(A), _B(B), _num_of_draws(0), _has_ended(false) {
+        if (&_A == &_B) {
+            throw std::invalid_argument("The game already ended!");
+        }
         assignCards();
-        num_of_draws = 0;
-        has_won = false;
-        has_ended = false;
     }
+
     // Methods.
     void assignCards();
     void distributeCards();
     void declareWinner(Player);
+    void putCards();
     void playTurn();
     void printLastTurn();
     void playAll();
     void printWiner();
     void printLog();
     void printStats();
+
     // Get methods.
-    Player& getPlayerA() { return A; }
-    Player& getPlayerB() { return B; }
-    std::vector<Card>& getMainDeck() {return main_deck; }
+    Player& getPlayerA() { return _A; }
+    Player& getPlayerB() { return _B; }
+    std::vector<Card>& getMainDeck() {return _main_deck; }
+    std::vector<Card>& getTurns() {return _turns; }
+    int& getNumOfDraws() {return _num_of_draws; }
+    bool& getHasEnded() {return _has_ended; }
+
     // ToString method.
-    std::string toString() { return A.toString() + "\n" + B.toString(); }
+    std::string toString() { return _A.toString() + "\n" + _B.toString(); }
 };
 
 #endif

@@ -6,33 +6,30 @@
 #include <vector>
 #include "card.hpp"
 
-const int EMPTY_DECK = 0;
-
 class Player {
     // Private attributes.
-    std::string name;
-    int num_of_wins;
-    std::vector <Card> player_deck;
-    std::vector <Card> win_deck;
+    std::string _name;
+    int _num_of_wins;
+    std::vector <Card> _player_deck;
+    std::vector <Card> _win_deck;
 
 public:
     // Constructor.
     Player(const std::string &player_name = "") :
-    name(player_name),
-    num_of_wins(EMPTY_DECK)
-    {}
-    // Methods.
+    _name(player_name), _num_of_wins(0) {}
 
     // Get method.
-    const std::string& getName() { return name; }
-    int stacksize() { return player_deck.size(); }
-    int cardesTaken() { return win_deck.size(); }
-    int& getNumOfWins() { return num_of_wins; }
-    std::vector<Card>& getPlayerDeck() {return player_deck; }
+    const std::string& getName() { return _name; }
+    int stacksize() { return _player_deck.size(); }
+    int cardesTaken() { return _win_deck.size(); }
+    int& getNumOfWins() { return _num_of_wins; }
+    std::vector<Card>& getPlayerDeck() {return _player_deck; }
+
     // Set method.
-    void setName(const std::string &new_name) { name = new_name; }
+    void setName(const std::string &new_name) { _name = new_name; }
+
     // ToString method.
-    std::string toString() { return "[Player name: " + name + "]"; }
+    std::string toString() { return "[Player name: " + _name + "]"; }
 };
 
 #endif

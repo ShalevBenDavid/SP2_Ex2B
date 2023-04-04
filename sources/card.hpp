@@ -2,6 +2,8 @@
 #ifndef CARD_H
 #define CARD_H
 #include <string>
+#include <iostream>
+#include <stdexcept>
 
 const int ACE = 1;
 const int JACK = 11;
@@ -10,8 +12,8 @@ const int KING = 13;
 
 class Card {
     // Private attributes.
-    int num;
-    std::string type;
+    int _num;
+    std::string _type;
 
 public:
     // Constructor.
@@ -20,12 +22,14 @@ public:
         if (num < ACE || num > KING) {
             throw std::invalid_argument("Num is out of range!");
         }
-        this -> num = num;
-        this -> type = type;
+        this -> _num = num;
+        this -> _type = type;
     }
+
     // Get method.
-    const int& getNum() { return num; }
-    const std::string& getName() { return type; }
+    const int& getNum() { return _num; }
+    const std::string& getName() { return _type; }
+
     // ToString method.
     std::string toString();
 };

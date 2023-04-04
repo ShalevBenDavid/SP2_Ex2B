@@ -1,6 +1,5 @@
 // Created by Shalev Ben David.
 #include "card.hpp"
-#include <string>
 
 std::string Card::toString() {
     switch (this -> num) {

@@ -3,6 +3,7 @@
 #include "card.hpp"
 #include <random>
 #include <iostream>
+#include <stdexcept>
 
 void Game::assignCards() {
     // Create all cards and insert to main deck.
@@ -22,46 +23,46 @@ void Game::assignCards() {
 // ****************** Distribute Cards From Main Deck To Both Players ******************
 void Game::distributeCards() {
     // While the main deck isn't empty.
-    while (this -> _main_deck) {
+    while (!(this -> _main_deck.empty())) {
         // Give a card for each player from the main deck.
-        this -> _B.getPlayerDeck().push_back(this -> _main_deck.back())
+        this -> B.getPlayerDeck().push_back(this -> _main_deck.back());
         this -> _main_deck.pop_back();
-        this -> _A.getPlayerDeck().push_back(this -> _main_deck.back())
+        this -> A.getPlayerDeck().push_back(this -> _main_deck.back());
         this -> _main_deck.pop_back();
     }
 }
 
 // ****************** Declaring X As The Round Winner ******************
-void Game::declareWinner(Player& X) {
+void Game::declareWinner(Player& winner) {
     // Add the main deck cards to X winning deck.
-    while (this -> _main_deck) {
-        X.getPlayerDeck().push_back(this -> _main_deck.back())
+    while (!(this -> _main_deck.empty())) {
+        winner.getPlayerDeck().push_back(this -> _main_deck.back());
         this -> _main_deck.pop_back();
     }
     // Add 1 to X's winning count.
-    X.getNumOfWins()++;
+    winner.getNumOfWins()++;
 }
 
 // ****************** Each Player Puts A Card In The Main Deck ******************
 void Game::putCards() {
-    this -> main_deck.push_back(this -> _A.getPlayerDeck().back());
-    this -> _A.getPlayerDeck().pop_back();
-    this -> main_deck.push_back(this -> _B.getPlayerDeck().back());
-    this -> _B.getPlayerDeck().pop_back();
+    this -> _main_deck.push_back(this -> A.getPlayerDeck().back());
+    this -> A.getPlayerDeck().pop_back();
+    this -> _main_deck.push_back(this -> B.getPlayerDeck().back());
+    this -> B.getPlayerDeck().pop_back();
 }
 
 // ****************** Playing A Turn ******************
 void Game::playTurn() {
     // If the game already ended, throw exception.
     if (this -> _has_ended) {
-        throw std::exception("The game already ended!");
+        throw std::runtime_error("The game already ended!");
     }
     bool round_end = false;
     // While this round still hasn't ended and there still cards left to play.
-    while ((!round_end) && (this -> _A.stacksize() > 0) && (this -> _B.stacksize() > 0)) {
+    while ((!round_end) && (this -> A.stacksize() > 0) && (this -> B.stacksize() > 0)) {
         // Each player puts a card in the main deck.
-        Card card_value_A = this -> _A.getPlayerDeck().back();
-        Card card_value_B = this -> _B.getPlayerDeck().back();
+        Card card_value_A = this -> A.getPlayerDeck().back();
+        Card card_value_B = this -> B.getPlayerDeck().back();
         this -> putCards();
         // If there is a draw, put another card upside down each in the main deck.
         if (card_value_A.getNum() == card_value_B.getNum()) {
@@ -70,40 +71,40 @@ void Game::playTurn() {
         }
         // Player A is the winner of this round.
         else if (card_value_A.getNum() == 2 && card_value_B.getNum() == ACE) {
-            declareWinner(this -> _A);
+            declareWinner(this -> A);
             round_end = true;
         }
         // Player B is the winner of this round.
         else if (card_value_B.getNum() == 2 && card_value_A.getNum() == ACE) {
-            declareWinner(this -> _B);
+            declareWinner(this -> B);
             round_end = true;
         }
         // Player A is the winner of this round.
         else if ((card_value_A.getNum() == ACE) || (card_value_A.getNum() > card_value_B.getNum())) {
-            declareWinner(this -> _A);
+            declareWinner(this -> A);
             round_end = true;
         }
         // Player B is the winner of this round.
         else if ((card_value_B.getNum() == ACE) || (card_value_B.getNum() > card_value_A.getNum())) {
-            declareWinner(this -> _B);
+            declareWinner(this -> B);
             round_end = true;
         }
     }
     // If the game has ended, distribute main deck && update has_ended.
-    if ((this -> _A.stacksize() = 0) && (this -> _B.stacksize() == 0)) {
+    if ((this -> A.stacksize() == 0) && (this -> B.stacksize() == 0)) {
         this -> distributeCards();
         this -> _has_ended = true;
     }
 }
 
 void Game::printLastTurn() {
-    std::cout << this -> turns.back() << std::endl;
+    std::cout << this -> _turns.back() << std::endl;
 }
 
 // ****************** Play Until The End ******************
 void Game::playAll() {
     // While the game hasn't ended yet.
-    while (!(this -> has_ended)) {
+    while (!(this -> _has_ended)) {
         this -> playTurn();
     }
 }
@@ -111,22 +112,22 @@ void Game::playAll() {
 // ****************** Printing The Winner ******************
 void Game::printWiner() {
     // If A is the winner, print him.
-    if (this -> _A.cardesTaken() > this -> _B.cardesTaken()) {
-        std::cout << "Winner is: " << this -> _A.getName() << "!" <<  std::endl;
+    if (this -> A.cardesTaken() > this -> B.cardesTaken()) {
+        std::cout << "Winner is: " << this -> A.getName() << "!" <<  std::endl;
     }
     // If B is the winner, print him.
-    else if (this -> _A.cardesTaken() < this -> _B.cardesTaken()) {
-        std::cout << "Winner is: " << this -> _B.getName() << "!" << std::endl;
+    else if (this -> A.cardesTaken() < this -> B.cardesTaken()) {
+        std::cout << "Winner is: " << this -> B.getName() << "!" << std::endl;
     }
     // If there is no winner declared, throw exception.
     else {
-        throw std::exception("No one has won!");
+        throw std::runtime_error("No one has won!");
     }
 }
 
 // ****************** Printing Log Of All Turns ******************
 void Game::printLog() {
-    for (int i = 0; i < this -> _turns.size(); i++) {
+    for (unsigned int i = 0; i < this -> _turns.size(); i++) {
         std::cout << this -> _turns[i] << std::endl;
     }
 }

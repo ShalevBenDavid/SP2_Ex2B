@@ -20,8 +20,8 @@ public:
 
     // Get method.
     const std::string& getName() { return _name; }
-    int stacksize() { return _player_deck.size(); }
-    int cardesTaken() { return _win_deck.size(); }
+    unsigned long stacksize() { return _player_deck.size(); }
+    unsigned long cardesTaken() { return _win_deck.size(); }
     int& getNumOfWins() { return _num_of_wins; }
     std::vector<Card>& getPlayerDeck() {return _player_deck; }
 

@@ -11,8 +11,8 @@ const int FULL_DECK = 26;
 
 class Game {
     // Private attributes.
-    Player _A;
-    Player _B;
+    Player A;
+    Player B;
     std::vector<Card> _main_deck;
     std::vector<std::string> _turns;
     int _num_of_draws;
@@ -20,9 +20,9 @@ class Game {
 
 public:
     // Constructor.
-    Game(Player& A, Player& B) :
-    _A(A), _B(B), _num_of_draws(0), _has_ended(false) {
-        if (&_A == &_B) {
+    Game(Player& playerA, Player& playerB) :
+    A(playerA), B(playerB), _num_of_draws(0), _has_ended(false) {
+        if (&A == &B) {
             throw std::invalid_argument("The game already ended!");
         }
         assignCards();
@@ -31,7 +31,7 @@ public:
     // Methods.
     void assignCards();
     void distributeCards();
-    void declareWinner(Player);
+    void declareWinner(Player& winner);
     void putCards();
     void playTurn();
     void printLastTurn();
@@ -41,15 +41,15 @@ public:
     void printStats();
 
     // Get methods.
-    Player& getPlayerA() { return _A; }
-    Player& getPlayerB() { return _B; }
+    Player& getPlayerA() { return A; }
+    Player& getPlayerB() { return B; }
     std::vector<Card>& getMainDeck() {return _main_deck; }
-    std::vector<Card>& getTurns() {return _turns; }
+    std::vector<std::string>& getTurns() {return _turns; }
     int& getNumOfDraws() {return _num_of_draws; }
     bool& getHasEnded() {return _has_ended; }
 
     // ToString method.
-    std::string toString() { return _A.toString() + "\n" + _B.toString(); }
+    std::string toString() { return A.toString() + "\n" + B.toString(); }
 };
 
 #endif

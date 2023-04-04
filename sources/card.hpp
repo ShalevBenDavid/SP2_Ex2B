@@ -27,7 +27,7 @@ public:
     }
 
     // Get method.
-    const int& getNum() { return _num; }
+    int const getNum() { return _num; }
     const std::string& getName() { return _type; }
 
     // ToString method.

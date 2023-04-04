@@ -2,16 +2,16 @@
 #include "card.hpp"
 
 std::string Card::toString() {
-    switch (this -> num) {
+    switch (this -> _num) {
         case ACE:
-            return "Ace of " + this -> type;
+            return "Ace of " + this -> _type;
         case JACK:
-            return "Jack of " + this -> type;
+            return "Jack of " + this -> _type;
         case QUEEN:
-            return "Queen of " + this -> type;
+            return "Queen of " + this -> _type;
         case KING:
-            return "king of " + this -> type;
+            return "king of " + this -> _type;
         default:
-            return std::to_string(this -> num) + " of " + this -> type;
+            return std::to_string(this -> _num) + " of " + this -> _type;
     }
 }

@@ -54,8 +54,6 @@ void Game::putCards() {
 
 // ****************** Playing A Turn ******************
 void Game::playTurn() {
-    // Create a string that represents current turn.
-    std::string turn;
     // If it is the same player, throw exception.
     if (&(this -> A) == &(this -> B)) {
         throw std::invalid_argument("The game already ended!");
@@ -66,6 +64,8 @@ void Game::playTurn() {
     }
     bool round_end = false;
     std::string winner;
+    // Create a string that represents current turn.
+    std::string turn;
     // While this round still hasn't ended and there still cards left to play.
     while ((!round_end) && (this -> A.stacksize() > 0) && (this -> B.stacksize() > 0)) {
         // Each player puts a card in the main deck.
@@ -78,7 +78,7 @@ void Game::playTurn() {
             this -> _num_of_draws++;
             // Update current turn.
             turn += this -> A.getName() + " played " + card_value_A.toString() + " "
-                    + this -> B.getName() + " played " + card_value_B.toString() + ".Draw. ";
+                    + this -> B.getName() + " played " + card_value_B.toString() + ". Draw. ";
         }
         // Player A is the winner of this round.
         else if (card_value_A.getNum() == 2 && card_value_B.getNum() == ACE) {
@@ -122,9 +122,11 @@ void Game::playTurn() {
 
 // ****************** Prints the last turn. ******************
 void Game::printLastTurn() {
+    std::cout << "-------------------------> Printing Last Turn <-------------------------" << std::endl;
     if (!(this -> _turns.empty())) {
         std::cout << this->_turns.back() << std::endl;
     }
+    std::cout << "\n";
 }
 
 // ****************** Play Until The End ******************
@@ -153,15 +155,19 @@ void Game::printWiner() {
 
 // ****************** Printing Log Of All Turns ******************
 void Game::printLog() {
+    std::cout << "-----------------------------> Printing Log <-----------------------------" << std::endl;
     for (size_t i = 0; i < this -> _turns.size(); i++) {
         std::cout << this -> _turns[i] << std::endl;
     }
+    std::cout << "\n";
 }
 
 // ****************** Printing Stats ******************
 void Game::printStats() {
-    std::cout << this -> A.toString() << std:endl;
-    std::cout << this -> B.toString() << std:endl;
+    std::cout << "---------------------------> Printing Stats <---------------------------" << std::endl;
+    std::cout << this -> A.toString() << std::endl;
+    std::cout << this -> B.toString() << std::endl;
     std::cout << "[Draws: " << std::to_string(this -> _num_of_draws) << "]" << std::endl;
-    std::cout << "[Draw Rate: " << std::to_string((this -> _num_of_draws / 26) * 100) << "]" << std::endl
+    std::cout << "[Draw Rate: " << std::to_string((this -> _num_of_draws / 26) * 100) << "]" << std::endl;
+    std::cout << "\n";
 }

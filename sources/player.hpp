@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include "card.hpp"
+namespace ariel {}
 
 class Player {
     // Private attributes.
@@ -20,8 +21,8 @@ public:
 
     // Get method.
     const std::string& getName() { return _name; }
-    unsigned long stacksize() { return _player_deck.size(); }
-    unsigned long cardesTaken() { return _win_deck.size(); }
+    size_t stacksize() { return _player_deck.size(); }
+    size_t cardesTaken() { return _win_deck.size(); }
     int& getNumOfWins() { return _num_of_wins; }
     std::vector<Card>& getPlayerDeck() {return _player_deck; }
     std::vector<Card>& getWinDeck() {return _win_deck; }
@@ -30,7 +31,7 @@ public:
     void setName(const std::string &new_name) { _name = new_name; }
 
     // ToString method.
-    std::string toString() { return "[Player name: " + _name + "]"; }
+    std::string toString();
 };
 
 #endif

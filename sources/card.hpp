@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <stdexcept>
+namespace ariel {}
 
 const int ACE = 1;
 const int JACK = 11;

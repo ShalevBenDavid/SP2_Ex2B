@@ -6,8 +6,7 @@
 #include <string>
 #include <stdexcept>
 #include <vector>
-
-const int FULL_DECK = 26;
+namespace ariel {}
 
 class Game {
     // Private attributes.

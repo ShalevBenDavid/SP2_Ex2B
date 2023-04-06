@@ -77,6 +77,9 @@ void Game::playTurn() {
         // If there is a draw, put another card upside down each in the main deck.
         if (card_value_A.getNum() == card_value_B.getNum()) {
             this -> _num_of_draws++;
+            // Update current turn.
+            turn += this -> A.getName() + " played " + card_value_A.toString() + " "
+                    + this -> B.getName() + " played " + card_value_B.toString() + ". Draw. ";
             // They can't put more cards. End the round.
             if ((this -> A.stacksize() == 0) && (this -> B.stacksize() == 0)) {
                 break;
@@ -85,30 +88,19 @@ void Game::playTurn() {
                 // Put 2 cards upside down.
                 this -> putCards();
             }
-            // Update current turn.
-            turn += this -> A.getName() + " played " + card_value_A.toString() + " "
-                    + this -> B.getName() + " played " + card_value_B.toString() + ". Draw. ";
         }
         // Player A is the winner of this round.
-        else if (card_value_A.getNum() == 2 && card_value_B.getNum() == ACE) {
+        else if ((card_value_A.getNum() == 2 && card_value_B.getNum() == ACE) ||
+                (card_value_A.getNum() == ACE) ||
+                (card_value_A.getNum() > card_value_B.getNum() && card_value_B.getNum() != ACE)) {
             declareWinner(this -> A);
             winner = this -> A.getName();
             round_end = true;
         }
         // Player B is the winner of this round.
-        else if (card_value_B.getNum() == 2 && card_value_A.getNum() == ACE) {
-            declareWinner(this -> B);
-            winner = this -> B.getName();
-            round_end = true;
-        }
-        // Player A is the winner of this round.
-        else if ((card_value_A.getNum() == ACE) || (card_value_A.getNum() > card_value_B.getNum())) {
-            declareWinner(this -> A);
-            winner = this -> A.getName();
-            round_end = true;
-        }
-        // Player B is the winner of this round.
-        else if ((card_value_B.getNum() == ACE) || (card_value_B.getNum() > card_value_A.getNum())) {
+        else if ((card_value_B.getNum() == 2 && card_value_A.getNum() == ACE) ||
+                 (card_value_B.getNum() == ACE) ||
+                 (card_value_B.getNum() > card_value_A.getNum() && card_value_A.getNum() != ACE)) {
             declareWinner(this -> B);
             winner = this -> B.getName();
             round_end = true;
@@ -119,7 +111,9 @@ void Game::playTurn() {
             turn += this -> A.getName() + " played " + card_value_A.toString() + " "
                     + this -> B.getName() + " played " + card_value_B.toString() + ". " + winner + " wins.";
         }
-        // Add current turn to the turns vector.
+    }
+    // Add current turn to the turns vector.
+    if (!(turn.empty())) {
         this -> _turns.push_back(turn);
     }
     // If the game has ended, distribute main deck && update has_ended.

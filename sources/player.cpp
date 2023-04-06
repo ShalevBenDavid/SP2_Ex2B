@@ -5,7 +5,7 @@ std::string Player::toString() {
     std::string info;
     info = "<<<<<<<<<<<<<<<<<<<<<<<<<< Player name: " + this -> _name + " >>>>>>>>>>>>>>>>>>>>>>>>>>\n";
     info += "[Wins: " + std::to_string(this -> _num_of_wins) + "]\n";
-    info += "[Win Rate: " + std::to_string((this -> _num_of_wins / 26) * 100) + "]\n";
+    info += "[Win Rate: " + std::to_string(((double) this -> _num_of_wins / 26) * 100) + "%]\n";
     info += "[Cards Won: " + std::to_string(this -> _win_deck.size()) + "]\n";
     // The player's current deck.
     info += "[Current Deck: | ";

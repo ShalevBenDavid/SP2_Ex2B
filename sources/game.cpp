@@ -3,6 +3,7 @@
 #include "card.hpp"
 #include <random>
 
+// ****************** Create The Cards And Distribute Them ******************
 void Game::assignCards() {
     // Create all cards and insert to main deck.
     for (int i = 1; i <= 13; i++) {
@@ -56,13 +57,14 @@ void Game::putCards() {
 void Game::playTurn() {
     // If it is the same player, throw exception.
     if (&(this -> A) == &(this -> B)) {
-        throw std::invalid_argument("The game already ended!");
+        throw std::invalid_argument("You need 2 distinct players for a game!");
     }
     // If the game already ended, throw exception.
     if (this -> _has_ended) {
         throw std::runtime_error("The game already ended!");
     }
     bool round_end = false;
+    // The name of the round's winner.
     std::string winner;
     // Create a string that represents current turn.
     std::string turn;
@@ -74,8 +76,15 @@ void Game::playTurn() {
         this -> putCards();
         // If there is a draw, put another card upside down each in the main deck.
         if (card_value_A.getNum() == card_value_B.getNum()) {
-            this -> putCards();
             this -> _num_of_draws++;
+            // They can't put more cards. End the round.
+            if ((this -> A.stacksize() == 0) && (this -> B.stacksize() == 0)) {
+                break;
+            }
+            else {
+                // Put 2 cards upside down.
+                this -> putCards();
+            }
             // Update current turn.
             turn += this -> A.getName() + " played " + card_value_A.toString() + " "
                     + this -> B.getName() + " played " + card_value_B.toString() + ". Draw. ";
@@ -168,6 +177,6 @@ void Game::printStats() {
     std::cout << this -> A.toString() << std::endl;
     std::cout << this -> B.toString() << std::endl;
     std::cout << "[Draws: " << std::to_string(this -> _num_of_draws) << "]" << std::endl;
-    std::cout << "[Draw Rate: " << std::to_string((this -> _num_of_draws / 26) * 100) << "]" << std::endl;
+    std::cout << "[Draw Rate: " << std::to_string(((double) this -> _num_of_draws / 26) * 100) << "%]" << std::endl;
     std::cout << "\n";
 }

@@ -20,7 +20,20 @@ class Game {
 public:
     // Constructor.
     Game(Player& playerA, Player& playerB) :
-    A(playerA), B(playerB), _num_of_draws(0), _has_ended(false) { assignCards(); }
+    A(playerA), B(playerB), _num_of_draws(0), _has_ended(false) {
+        // If one of the players is already in a game, throw exception.
+        if (playerA.getInGame()) {
+            throw std::invalid_argument(playerA.getName() + " already in game!");
+        }
+        if (playerB.getInGame()) {
+            throw std::invalid_argument(playerB.getName() + " already in game!");
+        }
+        // Assign the 2 players to this game.
+        playerA.getInGame() = true;
+        playerB.getInGame() = true;
+        // Create and distribute 52 cards to the players.
+        assignCards();
+    }
 
     // Methods.
     void assignCards();

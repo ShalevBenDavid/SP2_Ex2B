@@ -15,9 +15,6 @@ void Game::assignCards() {
     // Shuffle the main deck.
     std::random_device random_seed;
     std::shuffle(std::begin(this -> _main_deck), std::end(this -> _main_deck), random_seed);
-//    for (size_t i = 0; i < this -> _main_deck.size(); i++) {
-//        std::cout << this -> _main_deck[i].toString() << std::endl;
-//    }
     // Distribute the cards to the 2 players.
     this -> distributeCards(this -> A.getPlayerDeck(), this -> B.getPlayerDeck());
 }
@@ -144,15 +141,15 @@ void Game::playAll() {
 void Game::printWiner() {
     // If A is the winner, print him.
     if (this -> A.cardesTaken() > this -> B.cardesTaken()) {
-        std::cout << "Winner is: " << this -> A.getName() << "!" <<  std::endl;
+        std::cout << "Winner is player A: " << this -> A.getName() << "!" <<  std::endl;
     }
     // If B is the winner, print him.
     else if (this -> A.cardesTaken() < this -> B.cardesTaken()) {
-        std::cout << "Winner is: " << this -> B.getName() << "!" << std::endl;
+        std::cout << "Winner is player B: " << this -> B.getName() << "!" << std::endl;
     }
     // If there is no winner declared, throw exception.
     else {
-        throw std::runtime_error("No one has won!");
+        std::cout << "No one has won!" << std::endl;
     }
 }
 
@@ -173,4 +170,19 @@ void Game::printStats() {
     std::cout << "[Draws: " << std::to_string(this -> _num_of_draws) << "]" << std::endl;
     std::cout << "[Draw Rate: " << std::to_string(((double) this -> _num_of_draws / 26) * 100) << "%]" << std::endl;
     std::cout << "\n";
+}
+
+void Game::toString() {
+    std::string info;
+    info += "[Player A: " + this -> A.getName() + "]\n";
+    info += "[Player B: " + this -> B.getName() + "]\n";
+    // The game's main deck.
+    info += "[Main Deck: | ";
+    for (size_t i = 0; i < this -> _main_deck.size(); i++){
+        info += this -> _main_deck[i].toString() + " | ";
+    }
+    info += "]\n";
+    string ans = this -> _has_ended ? "Yes" : "No";
+    info += "Game Ended? " + ans;
+    return info;
 }

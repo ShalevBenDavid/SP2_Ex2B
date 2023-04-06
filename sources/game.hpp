@@ -56,7 +56,7 @@ public:
     bool& getHasEnded() {return _has_ended; }
 
     // ToString method.
-    std::string toString() { return A.toString() + "\n" + B.toString(); }
+    std::string toString();
 };
 
 #endif

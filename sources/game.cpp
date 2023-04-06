@@ -183,6 +183,6 @@ std::string Game::toString() {
     }
     info += "]\n";
     std::string ans = this -> _has_ended ? "Yes" : "No";
-    info += "Game Ended? " + ans;
+    info += "Game Ended? " + ans + ".\n";
     return info;
 }

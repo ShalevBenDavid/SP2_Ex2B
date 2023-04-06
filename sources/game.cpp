@@ -2,6 +2,7 @@
 #include "game.hpp"
 #include "card.hpp"
 #include <random>
+using namespace ariel;
 
 // ****************** Create The Cards And Distribute Them ******************
 void Game::assignCards() {
@@ -172,6 +173,7 @@ void Game::printStats() {
     std::cout << "\n";
 }
 
+// ****************** To String Method ******************
 std::string Game::toString() {
     std::string info;
     info += "[Player A: " + this -> A.getName() + "]\n";

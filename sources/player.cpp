@@ -1,6 +1,8 @@
 // Created by Shalev Ben David.
 #include "player.hpp"
+using namespace ariel;
 
+// ****************** To String Method ******************
 std::string Player::toString() {
     std::string info;
     info = "<<<<<<<<<<<<<<<<<<<<<<<<<< Player name: " + this -> _name + " >>>>>>>>>>>>>>>>>>>>>>>>>>\n";

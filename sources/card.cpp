@@ -1,6 +1,5 @@
 // Created by Shalev Ben David.
 #include "card.hpp"
-using namespace ariel;
 
 // ****************** To String Method ******************
 std::string Card::toString() {

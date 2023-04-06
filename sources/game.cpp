@@ -2,7 +2,6 @@
 #include "game.hpp"
 #include "card.hpp"
 #include <random>
-using namespace ariel;
 
 // ****************** Create The Cards And Distribute Them ******************
 void Game::assignCards() {

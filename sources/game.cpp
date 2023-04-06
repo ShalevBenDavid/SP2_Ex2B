@@ -172,7 +172,7 @@ void Game::printStats() {
     std::cout << "\n";
 }
 
-void Game::toString() {
+std::string Game::toString() {
     std::string info;
     info += "[Player A: " + this -> A.getName() + "]\n";
     info += "[Player B: " + this -> B.getName() + "]\n";
@@ -182,7 +182,7 @@ void Game::toString() {
         info += this -> _main_deck[i].toString() + " | ";
     }
     info += "]\n";
-    string ans = this -> _has_ended ? "Yes" : "No";
+    std::string ans = this -> _has_ended ? "Yes" : "No";
     info += "Game Ended? " + ans;
     return info;
 }

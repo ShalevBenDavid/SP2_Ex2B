@@ -140,16 +140,20 @@ void Game::playAll() {
 // ****************** Printing The Winner ******************
 void Game::printWiner() {
     // If A is the winner, print him.
-    if (this -> A.cardesTaken() > this -> B.cardesTaken()) {
+    if ((this -> _has_ended) && (this -> A.cardesTaken() > this -> B.cardesTaken())) {
         std::cout << "Winner is player A: " << this -> A.getName() << "!" <<  std::endl;
     }
     // If B is the winner, print him.
-    else if (this -> A.cardesTaken() < this -> B.cardesTaken()) {
+    else if ((this -> _has_ended) && (this -> A.cardesTaken() < this -> B.cardesTaken())) {
         std::cout << "Winner is player B: " << this -> B.getName() << "!" << std::endl;
     }
-    // If there is no winner declared, throw exception.
+    // If the game ended with no winner, print a draw.
+    else if (this -> _has_ended) {
+        std::cout << "A draw!" << std::endl;
+    }
+    // If the game hasn't ended yet, print it.
     else {
-        std::cout << "No one has won!" << std::endl;
+        std::cout << "The game hasn't ended yet..." << std::endl;
     }
 }
 

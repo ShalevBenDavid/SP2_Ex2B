@@ -13,6 +13,7 @@ void Game::assignCards() {
         this -> _main_deck.push_back(Card(i, "Clubs"));
     }
     // Shuffle the main deck.
+    // Source: https://stackoverflow.com/questions/6926433/how-to-shuffle-a-stdvector
     std::random_device random_seed;
     std::shuffle(std::begin(this -> _main_deck), std::end(this -> _main_deck), random_seed);
     // Distribute the cards to the 2 players.
